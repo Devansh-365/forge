@@ -3,6 +3,9 @@ import "~/styles/globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import Header from "~/components/header";
+import { JotaiProvider } from "~/providers";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -21,12 +24,23 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
-        <div className="h-full overflow-hidden">
-          <Header />
-          <main className="dash-layout-page-content-height scroll-bar-hidden overflow-y-scroll">
-            {children}
-          </main>
-        </div>
+        <JotaiProvider>
+          <ThemeProvider
+            defaultTheme="light"
+            attribute="class"
+            scriptProps={{
+              "data-cfasync": "false",
+            }}
+          >
+            <Toaster richColors position="top-center" visibleToasts={4} />
+            <div className="h-full overflow-hidden">
+              <Header />
+              <main className="dash-layout-page-content-height scroll-bar-hidden overflow-y-scroll">
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
+        </JotaiProvider>
       </body>
     </html>
   );
